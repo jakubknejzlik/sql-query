@@ -1,0 +1,15 @@
+image: edgecase/docker-ubuntu-node-awscli
+
+pipelines:
+  default:
+    image
+    - step:
+      script:
+        - npm install
+  branches:
+    master:
+      - step:
+          script:
+            - npm install -g n && n 4.2.0 && node -v
+            - apt-get install -y zip
+            - npm run deploy
