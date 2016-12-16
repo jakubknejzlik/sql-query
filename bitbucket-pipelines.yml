@@ -2,11 +2,10 @@ image: edgecase/docker-ubuntu-node-awscli
 
 pipelines:
   default:
-    image
     - step:
-      script:
-        - npm install
-        - npm run integration-tests
+        script:
+          - npm install
+          - npm run integration-tests --silent
   branches:
     master:
       - step:
