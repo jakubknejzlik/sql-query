@@ -6,6 +6,7 @@ pipelines:
     - step:
       script:
         - npm install
+        - npm run integration-tests
   branches:
     master:
       - step:
