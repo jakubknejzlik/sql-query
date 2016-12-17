@@ -16,9 +16,14 @@ describe('handler', () => {
         let read = new MySQLReadStream({connectionUrl:'mysql://root:test@localhost/test',sql:'SELECT * FROM users'})
         let write = new MySQLWriteStream({connectionUrl:'mysql://root:test@localhost/test',destinationTable:'users2'})
 
-        read.on('close', () => {
-            done()
-        })
+        read.on('end', function () {
+            read.connection.closeConnection();
+            write.end(()=> {
+                write.connection.closeConnection();
+                done();
+            });
+        });
+        
 
         read.on('error',done)
         write.on('error',done)
