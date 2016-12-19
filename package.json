@@ -4,7 +4,7 @@
   "scripts": {
     "start-mysql": "sudo docker-compose up -d mysql",
     "stop-all-containers": "sudo docker-compose down",
-    "wait-for-mysql": "docker run -e TARGETS=mysql:3306 --link swftaskdatapump_mysql_1:mysql --net swftaskdatapump_default waisbrot/wait",
+    "wait-for-mysql": "sudo docker run -e TARGETS=mysql:3306 --link swftaskdatapump_mysql_1:mysql --net swftaskdatapump_default waisbrot/wait",
     "pretest": "npm run wait-for-mysql",
     "test": "mocha test --timeout 60000",
     "integration-tests": "npm run start-mysql && npm test && npm run stop-all-containers",
