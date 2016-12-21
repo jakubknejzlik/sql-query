@@ -3,21 +3,17 @@
 const assert = require('assert')
 const mysql = require('mysql')
 
-const MySQLReadStream = require('../lib/MySQLReadStream')
-const MySQLWriteStream = require('../lib/MySQLWriteStream')
+const mysqlStreams = require('../lib/mysql')
 
 const fixtures = require('./fixtures')
 
 let pipeInTestDB = (select,destinationTable,callback) => {
-  let read = new MySQLReadStream({connectionUrl:'mysql://root:test@localhost/test',sql:select})
-  let write = new MySQLWriteStream({connectionUrl:'mysql://root:test@localhost/test',destinationTable:destinationTable})
 
-  read.on('end', function () {
-    read.connection.closeConnection();
-    write.end(()=> {
-      write.connection.closeConnection();
+  let read = mysqlStreams.createReadStream({connectionUrl:'mysql://root:test@localhost/test',sql:select})
+  let write = mysqlStreams.createWriteStream({connectionUrl:'mysql://root:test@localhost/test',destinationTable:destinationTable})
+
+  write.on('finish', function () {
       callback();
-    });
   });
 
 
@@ -25,6 +21,15 @@ let pipeInTestDB = (select,destinationTable,callback) => {
   write.on('error',callback)
 
   read.pipe(write)
+}
+
+let checkTableEquality = (tableName1, tablename2, callback) => {
+  let connection = mysql.createConnection('mysql://root:test@localhost/test')
+  connection.query(`SELECT (SELECT COUNT(*) from ${tableName1}) as count1, (SELECT COUNT(*) from ${tablename2}) as count2`,(err, result) => {
+    assert.equal(result[0].count1,result[0].count2)
+    connection.end()
+    callback()
+  })
 }
 
 describe('handler', () => {
@@ -35,13 +40,7 @@ describe('handler', () => {
 
     it('should pipe users -> users2 and finish', (done) => {
         pipeInTestDB('SELECT * FROM users','users2',() => {
-          setTimeout(() => {
-              let connection = mysql.createConnection('mysql://root:test@localhost/test')
-              connection.query('SELECT (SELECT COUNT(*) from users) as count1, (SELECT COUNT(*) from users2) as count2',(err, result) => {
-                  assert.
-                  done()
-              })
-          })
+          checkTableEquality('users','users2',done)
         })
     })
 
@@ -50,12 +49,18 @@ describe('handler', () => {
             assert.ok(!err,'did fail with error ' + (err?err.message:''))
             pipeInTestDB('SELECT * FROM users','users2',(err) => {
                 assert.ok(!err,'did fail with error ' + (err?err.message:''))
-                pipeInTestDB('SELECT * FROM users','users2',done)
+                pipeInTestDB('SELECT * FROM users','users2',(err) => {
+                  assert.ok(!err,'did fail with error ' + (err?err.message:''))
+                  checkTableEquality('users','users2',done)
+                })
             })
         })
     })
 
     it('should pipe cars -> anothercars and finish', (done) => {
-        pipeInTestDB('SELECT name as name2, brand as branding FROM cars','anothercars',done)
+        pipeInTestDB('SELECT name as name2, brand as branding FROM cars','anothercars',(err) => {
+          assert.ok(!err,'did fail with error ' + (err?err.message:''))
+          checkTableEquality('cars','anothercars',done)
+        })
     })
 })

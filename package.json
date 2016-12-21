@@ -2,10 +2,10 @@
   "name": "swf-task-datapump",
   "version": "0.0.1",
   "scripts": {
-    "start-mysql": "sudo docker-compose up -d mysql",
-    "stop-all-containers": "sudo docker-compose down",
-    "wait-for-mysql": "sudo docker run -e TARGETS=mysql:3306 --link swftaskdatapump_mysql_1:mysql --net swftaskdatapump_default waisbrot/wait",
-    "pretest": "npm run wait-for-mysql",
+    "start-mysql": "docker-compose up -d mysql",
+    "stop-all-containers": "docker-compose down",
+    "wait-for-mysql": "docker run -e TARGETS=mysql:3306 --link swftaskdatapump_mysql_1:mysql --net swftaskdatapump_default waisbrot/wait",
+    "pretest_": "npm run wait-for-mysql",
     "test": "mocha test --timeout 60000",
     "integration-tests": "npm run start-mysql && npm test && npm run stop-all-containers",
     "deploy": "npm run package-function && npm run update-function && rm lambda-function.zip",
@@ -13,8 +13,10 @@
     "update-function": "aws lambda update-function-code --function-name `node -e \"console.log(require('./package.json').name);\"` --region eu-central-1 --zip-file fileb://lambda-function.zip"
   },
   "dependencies": {
+    "flushwritable": "^1.0.0"
   },
   "devDependencies": {
+    "bitbucket-pipelines": "0.0.3",
     "bluebird": "^3.4.6",
     "mocha": "^3.1.2",
     "mysql": "^2.12.0"
