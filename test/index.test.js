@@ -7,10 +7,10 @@ const mysqlStreams = require('../lib/mysql')
 
 const fixtures = require('./fixtures')
 
-let pipeInTestDB = (select,destinationTable,callback) => {
+let pipeInTestDB = (select,table,callback) => {
 
   let read = mysqlStreams.createReadStream({connectionUrl:'mysql://root:test@localhost/test',sql:select})
-  let write = mysqlStreams.createWriteStream({connectionUrl:'mysql://root:test@localhost/test',destinationTable:destinationTable})
+  let write = mysqlStreams.createWriteStream({connectionUrl:'mysql://root:test@localhost/test',table:table})
 
   write.on('finish', function () {
       callback();
