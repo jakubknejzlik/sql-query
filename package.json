@@ -13,7 +13,8 @@
     "update-function": "aws lambda update-function-code --function-name `node -e \"console.log(require('./package.json').name);\"` --region eu-central-1 --zip-file fileb://lambda-function.zip"
   },
   "dependencies": {
-    "flushwritable": "^1.0.0"
+    "flushwritable": "^1.0.0",
+    "mssql": "^3.3.0"
   },
   "devDependencies": {
     "bitbucket-pipelines": "0.0.3",
