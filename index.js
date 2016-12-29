@@ -24,7 +24,7 @@ exports.handler = (event, context, callback) => {
   if(!destination) return callback(new Error('destination protocol not supported'))
 
   let read = source.createReadStream({connectionUrl: sourceConnectionURL, sql: sourceSQL})
-  let write = source.createWriteStream({connectionUrl: destinationConnectionURL, destinationTable: destinationTable})
+  let write = source.createWriteStream({connectionUrl: destinationConnectionURL, table: destinationTable})
 
   write.on('finish',() => {
     callback()
