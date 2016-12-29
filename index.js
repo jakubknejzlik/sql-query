@@ -8,6 +8,7 @@ const connections = {
 }
 
 exports.handler = (event, context, callback) => {
+  console.log('transfering',event)
   let sourceConnectionURL = event.sourceConnection
   let sourceSQL = event.sourceSQL
   let destinationConnectionURL = event.destinationConnection
