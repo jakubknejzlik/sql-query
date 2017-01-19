@@ -4,6 +4,8 @@ const assert = require('assert')
 const mysql = require('mysql')
 
 const mysqlStreams = require('../lib/mysql')
+const mssqlStreams = require('../lib/mssql')
+const handler = require('../index').handler
 
 const fixtures = require('./fixtures')
 
@@ -35,7 +37,7 @@ let checkTableEquality = (tableName1, tablename2, callback) => {
 describe('handler', () => {
 
     beforeEach(() => {
-        return fixtures.prepare()
+        // return fixtures.prepare()
     })
 
     it('should pipe users -> users2 and finish', (done) => {

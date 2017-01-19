@@ -15,18 +15,19 @@ exports.handler = (event, context, callback) => {
   let destinationTable = event.destinationTable
 
   let _sourceConnectionURL = url.parse(sourceConnectionURL)
-  let _destinationConnection = url.parse(destinationConnectionURL)
+  let _destinationConnectionURL = url.parse(destinationConnectionURL)
 
   let source = connections[_sourceConnectionURL.protocol.replace(':','')]
-  let destination = connections[_destinationConnection.protocol.replace(':','')]
+  let destination = connections[_destinationConnectionURL.protocol.replace(':','')]
 
   if(!source) return callback(new Error('source protocol not supported'))
   if(!destination) return callback(new Error('destination protocol not supported'))
 
   let read = source.createReadStream({connectionUrl: sourceConnectionURL, sql: sourceSQL})
-  let write = source.createWriteStream({connectionUrl: destinationConnectionURL, table: destinationTable})
+  let write = destination.createWriteStream({connectionUrl: destinationConnectionURL, table: destinationTable})
 
   write.on('finish',() => {
+    console.log('transfer finished',event)
     callback()
   })
 
