@@ -8,7 +8,9 @@ const connections = {
 }
 
 exports.handler = (event, context, callback) => {
-  console.log('transfering',event)
+  context.callbackWaitsForEmptyEventLoop = false
+
+  console.log('transfering',event.sourceSQL,'=>',event.destinationTable)
   let sourceConnectionURL = event.sourceConnection
   let sourceSQL = event.sourceSQL
   let destinationConnectionURL = event.destinationConnection
@@ -27,8 +29,8 @@ exports.handler = (event, context, callback) => {
   let write = destination.createWriteStream({connectionUrl: destinationConnectionURL, table: destinationTable})
 
   write.on('finish',() => {
-    console.log('transfer finished',event)
-    callback()
+    console.log('transfer finished',event.sourceSQL,'=>',event.destinationTable, callback)
+    callback(null)
   })
 
   write.on('error',callback)
