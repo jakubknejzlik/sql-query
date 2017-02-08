@@ -11,10 +11,10 @@ const connections = {
 exports.handler = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false
 
-  asser.ok(event.sourceConnection,'sourceConnection property missing')
-  asser.ok(event.sourceSQL,'sourceSQL property missing')
-  asser.ok(event.destinationConnection,'destinationConnection property missing')
-  asser.ok(event.destinationTable,'destinationTable property missing')
+  assert.ok(event.sourceConnection,'sourceConnection property missing')
+  assert.ok(event.sourceSQL,'sourceSQL property missing')
+  assert.ok(event.destinationConnection,'destinationConnection property missing')
+  assert.ok(event.destinationTable,'destinationTable property missing')
 
   console.log('transfering',event.sourceSQL,'=>',event.destinationTable)
   let sourceConnectionURL = event.sourceConnection
