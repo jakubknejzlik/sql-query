@@ -6,13 +6,14 @@
     "stop-all-containers": "docker-compose down",
     "wait-for-mysql": "docker run -e TARGETS=mysql:3306 --link swftaskdatapump_mysql_1:mysql --net swftaskdatapump_default waisbrot/wait",
     "pretest_": "npm run wait-for-mysql",
-    "test": "mocha test --timeout 60000",
+    "test": "mocha test --timeout 300000",
     "test-docker": "npm run start-mysql && npm run wair-for-mysql && npm test && npm run stop-all-containers",
     "deploy": "npm run package-function && npm run update-function && rm lambda-function.zip",
     "package-function": "npm install --production && zip -q -r lambda-function.zip index.js node_modules lib",
     "update-function": "aws lambda update-function-code --function-name `node -e \"console.log(require('./package.json').name);\"` --region eu-central-1 --zip-file fileb://lambda-function.zip"
   },
   "dependencies": {
+    "async": "^2.1.4",
     "flushwritable": "^1.0.0",
     "mssql": "^3.3.0"
   },
