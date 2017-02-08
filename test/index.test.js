@@ -47,50 +47,25 @@ describe('handler', () => {
     })
 
   it.skip('test', (done) => {
-    let sql = `SELECT [type]
-    ,concat(id,date) as eid
-    ,[number]
-    ,[invoice_address_name]
-    ,[invoice_address_street]
-    ,[invoice_address_zip]
-    ,[invoice_address_city]
-    ,[delivery_address_name]
-    ,[delivery_address_street]
-    ,[delivery_address_zip]
-    ,[delivery_address_city]
-    ,[in_id]
-    ,[tin]
-    ,[customer_id]
-    ,[order_number]
-    ,[delivery_note]
-    ,[price_vat1]
-    ,[price_vat2]
-    ,[price_vat3]
-    ,[price_vat4]
-    ,[vat1]
-    ,[vat2]
-    ,[vat3]
-    ,[vat4]
-    ,[price_czk]
-    ,[price_paid_czk]
-    ,[price_foreign]
-    ,[price_paid_foreign]
-    ,[currency]
-    ,[rate]
-    ,[date]
-    ,[tax_date]
-    ,[paid_date]
-    ,[maturity_date]
-    ,[after_maturity_date]
-    ,[account]
-    ,101 as company_id
-    FROM [db19465_fenix].[db19465_fenix].[Invoice]
-    where type like 'F%'`
+    let sql = `SELECT type
+    ,number
+    ,name
+    ,vs
+    ,amount_czk
+    ,amount_foreign
+    ,currency
+    ,maturity_date
+    ,CONVERT(varchar(23), [presumption_maturity_date], 121) as presumption_maturity_date
+    ,CONVERT(varchar(23), [paid_date], 121) as paid_date
+    ,days_after_due_date
+    ,total_after_due_date
+    FROM [db19465_Metrum].[db19465_Metrum].[IFS_NC_credit_debt]
+    where amount_czk<>0 or amount_foreign<>0`
     handler({
-      sourceConnection: 'mssql://db19465_fenix:heliosifsystem@mssql15.profiwh.com/db19465_fenix',
+      sourceConnection: 'mssql://db19465_metrum:@mssql15.profiwh.com/db19465_metrum',
       sourceSQL: sql,
-      destinationConnection: 'mysql://fenix:7TL4PnhTqezKteSv@db.novato.cz/fenix_holding',
-      destinationTable: 'invoice2'
+      destinationConnection: 'mysql://udidb:@udi.cadqzpnixpvb.eu-central-1.rds.amazonaws.com:3306/udidb_metrum',
+      destinationTable: 'creditdebts'
     },{},(err)=> {
       console.log(err)
       done(err)
