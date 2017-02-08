@@ -1,5 +1,6 @@
 'use strict'
 
+const assert = require('assert')
 const url = require('url')
 
 const connections = {
@@ -10,11 +11,17 @@ const connections = {
 exports.handler = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false
 
+  asser.ok(event.sourceConnection,'sourceConnection property missing')
+  asser.ok(event.sourceSQL,'sourceSQL property missing')
+  asser.ok(event.destinationConnection,'destinationConnection property missing')
+  asser.ok(event.destinationTable,'destinationTable property missing')
+
   console.log('transfering',event.sourceSQL,'=>',event.destinationTable)
   let sourceConnectionURL = event.sourceConnection
   let sourceSQL = event.sourceSQL
   let destinationConnectionURL = event.destinationConnection
   let destinationTable = event.destinationTable
+
 
   let _sourceConnectionURL = url.parse(sourceConnectionURL)
   let _destinationConnectionURL = url.parse(destinationConnectionURL)
