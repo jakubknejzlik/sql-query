@@ -3,7 +3,7 @@
 const transfer = require('./lib/transfer')
 
 const event = {
-  sourceConnection: process.env.SOURCE_URL,
+  sourceUrl: process.env.SOURCE_URL,
   sourceSQL: process.env.SOURCE_QUERY,
   destinationUrl: process.env.DESTINATION_URL,
   destinationTable: process.env.DESTINATION_TABLE

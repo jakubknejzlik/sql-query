@@ -56,9 +56,9 @@ describe('handler', () => {
         FROM users
       `
       handler({
-        sourceConnection: 'mysql://root:test@localhost/test',
+        sourceUrl: 'mysql://root:test@localhost/test',
         sourceSQL: sql,
-        destinationConnection: 'mysql://root:test@localhost/test',
+        destinationUrl: 'mysql://root:test@localhost/test',
         destinationTable: 'users2'
       }).then(() => {
         return checkTableEquality('users','users2', done)
