@@ -11,4 +11,4 @@ WORKDIR /code
 
 RUN npm install -g n --silent
 
-ENTRYPOINT ["./bootstrap.sh"]
+ENTRYPOINT ["npm","start"]

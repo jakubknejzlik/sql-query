@@ -46,31 +46,24 @@ describe('handler', () => {
         })
     })
 
-  it.skip('test', (done) => {
-    let sql = `SELECT type
-    ,number
-    ,name
-    ,vs
-    ,amount_czk
-    ,amount_foreign
-    ,currency
-    ,maturity_date
-    ,CONVERT(varchar(23), [presumption_maturity_date], 121) as presumption_maturity_date
-    ,CONVERT(varchar(23), [paid_date], 121) as paid_date
-    ,days_after_due_date
-    ,total_after_due_date
-    FROM [db19465_Metrum].[db19465_Metrum].[IFS_NC_credit_debt]
-    where amount_czk<>0 or amount_foreign<>0`
-    handler({
-      sourceConnection: 'mssql://db19465_metrum:@mssql15.profiwh.com/db19465_metrum',
-      sourceSQL: sql,
-      destinationConnection: 'mysql://udidb:@udi.cadqzpnixpvb.eu-central-1.rds.amazonaws.com:3306/udidb_metrum',
-      destinationTable: 'creditdebts'
-    },{},(err)=> {
-      console.log(err)
-      done(err)
+    it('test', (done) => {
+      let sql = `SELECT
+        id,
+        username,
+        firstname,
+        lastname,
+        birthdate
+        FROM users
+      `
+      handler({
+        sourceConnection: 'mysql://root:test@localhost/test',
+        sourceSQL: sql,
+        destinationConnection: 'mysql://root:test@localhost/test',
+        destinationTable: 'users2'
+      }).then(() => {
+        return checkTableEquality('users','users2', done)
+      }).catch(done)
     })
-  })
 
     it('should be able to pipe users -> users2 and finish multiple times', (done) => {
         pipeInTestDB('SELECT * FROM users','users2',(err) => {

@@ -21,7 +21,7 @@ exports.prepare = () => {
         // console.log('creating batch',x)
         let values = []
 
-        for (let i = 0; i < 10000; i++) {
+        for (let i = 0; i < 1000; i++) {
             values.push(`('user_${x}_${i}','firstname_${x}_${i}','lastname_${x}_${i}','1980-01-01' + INTERVAL ${i} DAY)`)
         }
 
