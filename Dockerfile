@@ -9,6 +9,6 @@ COPY . /code
 
 WORKDIR /code
 
-RUN npm install -g n --silent
+RUN npm install
 
 ENTRYPOINT ["npm","start"]
