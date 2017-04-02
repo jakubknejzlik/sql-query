@@ -5,7 +5,7 @@ const mysql = require('mysql')
 
 const mysqlStreams = require('../lib/mysql')
 const mssqlStreams = require('../lib/mssql')
-const handler = require('../index').handler
+const handler = require('../lib/transfer')
 
 const fixtures = require('./fixtures')
 

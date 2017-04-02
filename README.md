@@ -1,4 +1,4 @@
-# swf-task-datapump
+# sql-datapump
 
 Stream reader/writer for relational databases
 

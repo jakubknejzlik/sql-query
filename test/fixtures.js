@@ -39,4 +39,3 @@ exports.prepare = () => {
     return connection.queryAsync(insert)
   })
 }
-
