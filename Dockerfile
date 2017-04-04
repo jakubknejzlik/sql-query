@@ -11,4 +11,4 @@ WORKDIR /code
 
 RUN npm install
 
-ENTRYPOINT ["npm","start"]
+ENTRYPOINT ["npm","start","--silent"]
