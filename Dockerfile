@@ -1,9 +1,7 @@
 FROM node
 
 ENV SOURCE_URL mysql://root:test@localhost/test
-ENV SOURCE_QUERY stable
-ENV DESTINATION_URL mysql://root:test@localhost/test
-ENV DESTINATION_TABLE stable
+ENV SQL stable
 
 COPY . /code
 

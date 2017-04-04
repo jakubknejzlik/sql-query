@@ -1,17 +1,15 @@
 'use strict'
 
-const transfer = require('./lib/transfer')
+const query = require('./lib/query')
 
 const event = {
-  sourceUrl: process.env.SOURCE_URL,
-  sourceSQL: process.env.SOURCE_QUERY,
-  destinationUrl: process.env.DESTINATION_URL,
-  destinationTable: process.env.DESTINATION_TABLE
+  connectionUrl: process.env.CONNECTION_URL,
+  sql: process.env.SQL
 }
 
 console.log(`transfering ${event.sourceSQL}=>${event.destinationTable}`)
-transfer(event).then(() => {
-  console.log('transfer completed')
+query(event).then(() => {
+  console.log('query completed')
 }).catch((err) => {
-  console.log(`failed to transfer data ${err.message}`)
+  console.log(`failed to run query ${err.message}`)
 })
