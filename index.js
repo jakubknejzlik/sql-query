@@ -7,7 +7,7 @@ const event = {
   sql: process.env.SQL
 }
 
-console.log(`transfering ${event.sourceSQL}=>${event.destinationTable}`)
+console.log(`running query ${event.sql}`)
 query(event).then(() => {
   console.log('query completed')
 }).catch((err) => {

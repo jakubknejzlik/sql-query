@@ -1,6 +1,6 @@
-# sql-datapump
+# sql-query
 
-Stream reader/writer for relational databases
+Run sql queries in docker container.
 
 ## Running tests
 
