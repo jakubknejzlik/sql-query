@@ -4,7 +4,7 @@ const query = require('./lib/query')
 
 const event = {
   connectionUrl: process.env.CONNECTION_URL,
-  sql: process.env.SQL
+  sql: process.env.QUERY
 }
 
 console.log(`running query ${event.sql}`)
