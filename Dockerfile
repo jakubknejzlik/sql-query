@@ -1,7 +1,7 @@
 FROM node
 
-ENV SOURCE_URL mysql://root:test@localhost/test
-ENV QUERY stable
+ENV CONNECTION_URL mysql://root:test@localhost/test
+ENV QUERY query not specified
 
 COPY . /code
 
