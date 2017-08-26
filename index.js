@@ -14,4 +14,5 @@ query(event)
   })
   .catch(err => {
     console.log(`failed to run query ${err.message}`);
+    process.exit(1);
   });
