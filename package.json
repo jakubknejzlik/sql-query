@@ -14,7 +14,7 @@
     "update-function": "aws lambda update-function-code --function-name `node -e \"console.log(require('./package.json').name);\"` --region eu-central-1 --zip-file fileb://lambda-function.zip"
   },
   "dependencies": {
-    "async": "^2.1.4",
+    "async": "^2.6.4",
     "bluebird": "^3.4.6",
     "flushwritable": "^1.0.0",
     "mssql": "^3.3.0",
